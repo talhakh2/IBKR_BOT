@@ -20,7 +20,7 @@ port = int(os.getenv("PORT"))
 ibkr_api = str(os.getenv("IBKR_API"))
 mongo_uri = str(os.getenv("MONGO_URI"))
 
-print("mongo_uri: ", port)
+print("port: ", port)
 print("ibkr_api: ", ibkr_api)
 print("mongo_uri: ", mongo_uri)
 
@@ -505,7 +505,17 @@ async def get_orders():
 # -----------------------------
 @app.get("/check")
 def read_root():
-    return {"Hello": "World"}
+    # return {"Hello": "World"}
+    # Create an initial trade record (status "Waiting for Entry")
+    pending_record = {
+        "status": "Connected"
+    }
+    # Insert pending record; obtain its _id as a string (our cancel key).
+    result = trades_collection.insert_one(pending_record)
+    mongo_id = str(result.inserted_id)
+    print("Stored pending trade record with mongo_id:", mongo_id)
+
+    return result
 
 @app.post("/place_order")
 async def place_order_endpoint(order: OrderDetails, background_tasks: BackgroundTasks):
