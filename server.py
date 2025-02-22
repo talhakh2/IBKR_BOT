@@ -348,7 +348,7 @@ def cancel_order_by_mongo_id(mongo_id: str):
 
                 if record and record.get("stop_loss_price") is not None:
                     try:
-                        print(f"Stop-loss price from record: {record.get("stop_loss_price")}")
+                        # print(f"Stop-loss price from record: {record.get("stop_loss_price")}")
                         stop_loss_order_data = record.get("stopLossOrder")
 
                         # Deserialize the StopOrder from the stored dictionary
