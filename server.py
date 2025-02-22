@@ -10,12 +10,13 @@ import math
 from bson import ObjectId
 from dotenv import load_dotenv
 import os
+import uvicorn
 
 app = FastAPI()
 # Load environment variables from .env file into os.environ
 load_dotenv()
 
-port = os.getenv("PORT")
+port = int(os.getenv("PORT"))
 ibkr_api = str(os.getenv("IBKR_API"))
 mongo_uri = str(os.getenv("MONGO_URI"))
 
@@ -529,3 +530,8 @@ async def cancel_order_endpoint(cancel_req: CancelOrderRequest):
         return {"message": "Order cancelled"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+if __name__ == "__main__":
+    app_port = int(os.environ.get("APP_PORT", 8000))  # Use PORT from env, default to 8000
+    uvicorn.run(app, host="0.0.0.0", port=app_port)
