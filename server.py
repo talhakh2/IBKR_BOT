@@ -244,7 +244,7 @@ def place_order(symbol, action, quantity, entry_time, exit_time, stop_loss_ticks
                 # Retrieve stop-loss price from DB
                 trade_record = trades_collection.find_one({"_id": ObjectId(mongo_id)})
                 if trade_record and trade_record.get("stop_loss_price") is not None:
-                    print(f"Stop-loss price from record: {trade_record.get("stop_loss_price")}")
+                    
                     stop_loss_order_data = trade_record.get("stopLossOrder")
 
                     # Deserialize the StopOrder from the stored dictionary
