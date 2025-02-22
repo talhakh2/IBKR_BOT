@@ -384,7 +384,8 @@ def cancel_order_by_mongo_id(mongo_id: str):
                             contract1 = Stock(symbol=record.get("symbol"), exchange='SMART', currency='USD')
                             exit_order = MarketOrder('SELL' if record.get("action").upper() == "BUY" else 'BUY', record.get("quantity"))
                             exit_trade = ib.placeOrder(contract1, exit_order)
-                            print(f"Placed exit order for {record.get("symbol")}")
+                            print(f"Placed exit order for {record.get('symbol')}")
+                            print("udated")
 
                             # p = await ib_order1.connect(ibkr_api, port, clientId=2)
                             # print("Connected to IBKR at", p)
