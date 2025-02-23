@@ -44,9 +44,6 @@ ib_order = IB()
 
 ib_order1 = IB()
 
-p = ib_order.connect(ibkr_api, port, clientId=3)
-print("Connected to IBKR at", p)
-
 # -----------------------------
 # Global Client ID Counter for IB Connections (if needed)
 # -----------------------------
@@ -77,7 +74,6 @@ def ensure_connected(ib_instance: IB):
     if not ib_instance.isConnected():
         connect_to_ibkr(ib_instance)
 
-ensure_connected(ib)
 # -----------------------------
 # Data Models for Endpoints
 # -----------------------------
@@ -131,7 +127,7 @@ def place_order(symbol, action, quantity, entry_time, exit_time, stop_loss_ticks
     print('ib place order:', ib)
     cancel_event = threading.Event()
     try:
-        
+        ensure_connected(ib)
         ensure_event_loop() 
 
         print(f"Order received. Entry time: {entry_time}, Exit time: {exit_time}")
@@ -453,8 +449,8 @@ def cancel_order_by_mongo_id(mongo_id: str):
 async def get_orders():
     try:
         orders = list(trades_collection.find({"entryOrderId": {"$exists": True}}))
-        # p = await ib_order.connectAsync(ibkr_api, port, clientId=3)
-        # print("Connected to IBKR at", p)
+        p = await ib_order.connectAsync(ibkr_api, port, clientId=3)
+        print("Connected to IBKR at", p)
 
         # Example usage
         exec_filter = ExecutionFilter()
@@ -502,7 +498,7 @@ async def get_orders():
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         print("ib_order disconnected")
-        
+        ib_order.disconnect()
 
 # -----------------------------
 # API Endpoints
