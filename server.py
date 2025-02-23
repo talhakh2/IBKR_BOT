@@ -44,7 +44,7 @@ ib_order = IB()
 
 ib_order1 = IB()
 
-ib_order.connectAsync(ibkr_api, port, clientId=3)
+p = ib_order.connectAsync(ibkr_api, port, clientId=3)
 print("Connected to IBKR at", p)
 
 # -----------------------------
