@@ -44,6 +44,9 @@ ib_order = IB()
 
 ib_order1 = IB()
 
+ib_order.connectAsync(ibkr_api, port, clientId=3)
+print("Connected to IBKR at", p)
+
 # -----------------------------
 # Global Client ID Counter for IB Connections (if needed)
 # -----------------------------
@@ -450,8 +453,8 @@ def cancel_order_by_mongo_id(mongo_id: str):
 async def get_orders():
     try:
         orders = list(trades_collection.find({"entryOrderId": {"$exists": True}}))
-        p = await ib_order.connectAsync(ibkr_api, port, clientId=3)
-        print("Connected to IBKR at", p)
+        # p = await ib_order.connectAsync(ibkr_api, port, clientId=3)
+        # print("Connected to IBKR at", p)
 
         # Example usage
         exec_filter = ExecutionFilter()
