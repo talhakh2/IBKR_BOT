@@ -502,7 +502,7 @@ async def get_orders():
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         print("ib_order disconnected")
-        ib_order.disconnect()
+        
 
 # -----------------------------
 # API Endpoints
