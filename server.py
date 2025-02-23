@@ -74,6 +74,7 @@ def ensure_connected(ib_instance: IB):
     if not ib_instance.isConnected():
         connect_to_ibkr(ib_instance)
 
+ensure_connected(ib)
 # -----------------------------
 # Data Models for Endpoints
 # -----------------------------
@@ -127,7 +128,7 @@ def place_order(symbol, action, quantity, entry_time, exit_time, stop_loss_ticks
     print('ib place order:', ib)
     cancel_event = threading.Event()
     try:
-        ensure_connected(ib)
+        
         ensure_event_loop() 
 
         print(f"Order received. Entry time: {entry_time}, Exit time: {exit_time}")
